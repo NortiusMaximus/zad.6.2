@@ -149,6 +149,8 @@ def delete_all(conn, table):
 
 
 if __name__ == "__main__":
+   
+   #tworzę tabele
 
    create_teams_sql = """
    -- teams table
@@ -178,13 +180,12 @@ if __name__ == "__main__":
    if conn is not None:
         execute_sql(conn, create_teams_sql)
         execute_sql(conn, create_players_sql)
-    
+
+        #uzupełnienie tabel danymi    
         team = ('Crusaders', 1996, 'Christchurch')
         team2 = ('Hurricanes', 1996, 'Wellington')
-
         team_id = add_team(conn, team)
-        team_id2 = add_team(conn, team2)
-        
+        team_id2 = add_team(conn, team2)     
         player = (
             team_id,
             "Richie",
@@ -230,8 +231,10 @@ if __name__ == "__main__":
         # wszyscy gracze o wzroście 188
         print(select_where(conn, "players", height_in_cm=188))
 
+        # poprawka błędu w danych
         update(conn, "players", 4, height_in_cm=187)
 
+        # gracz kontuzjowany - usunięcie z bazy
         delete_where(conn, "players", id=1)
 
         conn.close()
